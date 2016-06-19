@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);
+.arvo {
+    font-family: 'Arvo', serif;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.background-image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../assets/background-1.png');
+    height: 619px;
+}
+
+.welcome-text {
+    color: #fbfbfb;
+    font-size: 33px;
+    padding: 90px;
+    position: relative;
+}
+
+.welcome-sub-text {
+    font-size: 25px;
+    font-weight: 300;
+    color: #f9f6f4;
+}
+
+.welcome-footer {
+    padding-top: 10px;
+    font-size:15px;
+    font-weight: 300;
+    color: #f9f6f4;
+}
+
+.experience-btn{
+    margin-top: 30px;
+    border-radius: 0;
+    transform: scale(1.2);
+}
+
+.error-class{
+    color: #f73030;
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+
+.dashboard{
+    font-size: 20px;
+}
+
+@-webkit-keyframes textmove {
+    0% {
+        top: 0px;
+    }
+    100% {
+        top: 90px;
+    }
+}
+
+
+/* Standard syntax */
+
+@keyframes textmove {
+    0% {
+        top: 0px;
+    }
+    100% {
+        top: 90px;
+    }
+}

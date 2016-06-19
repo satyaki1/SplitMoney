@@ -1,0 +1,68 @@
+<div class="container-fluid dashboard">
+    <div class="roboto" style="padding-top:10px">Put the name and contributed amount:</div>
+
+    <div class="row">
+        <form name="contrib" class="form-inline text-center" novalidate>
+            <div class="form-group">
+                <label class="sr-only" for="name">Name</label>
+                <input type="text" id="name" ng-model="userForm.name" name="name" ng-pattern="/^[a-zA-Z\s]+$/" ng-minlength="2" ng-maxlength="32" required placeholder="Name">
+                <div ng-messages="contrib.name.$error" class="error-class" ng-show="contrib.name.$dirty">
+                    <div ng-message="required">Name is mandetory</div>
+                    <div ng-message="minlength">Minimum 2 charcters are allowed</div>
+                    <div ng-message="pattern">Only text is allowed</div>
+                    <div ng-message="maxlength">Maximum 32 charcters are allowed</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Rs.</div>
+                    <input type="text" name="amount" ng-model="userForm.amount" ng-pattern="/^[0-9]+$/" ng-maxlength="6" placeholder="Conributed Amount" required>
+
+                </div>
+                <div ng-messages="contrib.amount.$error" ng-show="contrib.amount.$dirty" class="error-class">
+                    <div ng-message="maxlength">Amount can not exceed 6 digits</div>
+                    <div ng-message="required">Amount is required</div>
+                    <div ng-message="pattern">Amount has to be a number</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-info" ng-click="addUsers()" ng-disabled="contrib.name.$error && contrib.name.$invalid || contrib.amount.$error && contrib.amount.$invalid">Add</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="text-right col-sm-12">
+            <strong>Total Spent: Rs. {{totalSpent}}</strong>
+            <div>
+            <button class="btn btn-success" ng-click="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12" ng-show="cloneArray.length!=0">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Contribution Amount</th>
+                        <th>Amount Payable</th>
+                        <th>Amount Receivable</th>
+                    </tr>
+                    <tr ng-repeat="user in cloneArray track by $index">
+                        <td>{{$index+1}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.amount}}</td>
+                        <td style="color:red">{{user.pay}}</td>
+                        <td style="color:green">{{user.receive}}</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--New Features-->
+    <!--<div class="col-sm-12 text-center" ng-show="cloneArray.length!=0" style="padding-top:20px">
+        <button class="btn btn-warning" ng-click="thanksCount()" ng-disabled="thanksPressed">Thank Us!</button>
+    </div>-->
+</div>
