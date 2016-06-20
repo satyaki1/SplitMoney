@@ -17,7 +17,9 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-image: url('../assets/background-1.png');
-    height: 619px;
+    height: 100%;
+    width: 100%;
+    position: fixed;
 }
 
 .welcome-text {
@@ -50,6 +52,7 @@ body {
     color: #f73030;
     font-family: 'Roboto';
     font-weight: 500;
+    font-size: 12px;
 }
 
 .dashboard{
