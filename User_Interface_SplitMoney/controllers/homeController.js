@@ -5,17 +5,8 @@
             $scope.userArray = [];
             $scope.cloneArray = [];
             $scope.totalSpent = 0.0;
-
-            $scope.addUsers = function () {
-                var userJson = {};
-                $scope.totalSpent = 0.0;
-
-                userJson.name = $scope.userForm.name;
-                userJson.amount = $scope.userForm.amount;
-                userJson.pay = 0.0;
-                userJson.receive = 0.0;
-                $scope.cloneArray.push(userJson);
-
+            
+            var calculateExpenses = function(){
                 //calculate total amount
                 angular.forEach($scope.cloneArray, function (val, key) {
                     $scope.totalSpent = (parseFloat($scope.totalSpent)) + (parseFloat(val.amount));
@@ -25,10 +16,31 @@
                 angular.forEach($scope.cloneArray, function (val, key) {
                     var arrayLength = $scope.cloneArray.length;
                     var equalDivision = parseFloat($scope.totalSpent / arrayLength);
-                    val.pay = (parseFloat(val.amount - equalDivision)) < 0 ? -(parseFloat(val.amount - equalDivision)) : 0;
-                    val.receive = (parseFloat(val.amount - equalDivision)) > 0 ? (parseFloat(val.amount - equalDivision)) : 0;
+                    val.pay = (parseFloat(val.amount - equalDivision)) < 0 ? -Math.round(parseFloat(val.amount - equalDivision)*100)/100 : 0;
+                    val.receive = (parseFloat(val.amount - equalDivision)) > 0 ? Math.round(parseFloat(val.amount - equalDivision)*100)/100 : 0;
                     //$scope.userArray.push(userJson);
                 });
+            };
+            
+            $scope.addUsers = function () {
+                var userJson = {};
+                $scope.totalSpent = 0.0;
+
+                userJson.name = $scope.userForm.name;
+                userJson.amount = $scope.userForm.amount;
+                userJson.pay = 0.0;
+                userJson.receive = 0.0;
+                $scope.cloneArray.push(userJson);
+                
+                calculateExpenses();
+                
+            };
+            
+            $scope.deleteEntry = function(recordId){
+                $scope.cloneArray.splice(recordId,1);
+                console.log("=="+$scope.cloneArray);
+                $scope.totalSpent = 0;
+                calculateExpenses();
             };
 
             $scope.reset = function () {

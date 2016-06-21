@@ -12,6 +12,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 .background-image {
     background-position: center;
     background-size: cover;
@@ -31,15 +35,15 @@ body {
 
 .welcome-sub-text {
     font-size: 25px;
-    font-weight: 300;
+    font-weight: 400;
     color: #f9f6f4;
 }
 
 .welcome-footer {
     padding-top: 10px;
     font-size:15px;
-    font-weight: 300;
-    color: #f9f6f4;
+    font-weight: 400;
+    color: #fff;
 }
 
 .experience-btn{
