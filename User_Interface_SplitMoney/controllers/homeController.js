@@ -18,7 +18,6 @@
                     var equalDivision = parseFloat($scope.totalSpent / arrayLength);
                     val.pay = (parseFloat(val.amount - equalDivision)) < 0 ? -Math.round(parseFloat(val.amount - equalDivision)*100)/100 : 0;
                     val.receive = (parseFloat(val.amount - equalDivision)) > 0 ? Math.round(parseFloat(val.amount - equalDivision)*100)/100 : 0;
-                    //$scope.userArray.push(userJson);
                 });
             };
             
@@ -32,8 +31,23 @@
                 userJson.receive = 0.0;
                 $scope.cloneArray.push(userJson);
                 
-                calculateExpenses();
+                $scope.userForm.name = undefined;
+                $scope.userForm.amount = undefined;
                 
+                $scope.contrib.$setPristine();
+                
+                calculateExpenses();
+            };
+            
+            $scope.changeEntry = function(index){
+              $scope["changeEntry"+index] = true; 
+            };
+            
+            $scope.updateEntry = function(amount,index){
+                $scope.totalSpent = 0;
+                $scope.cloneArray[index].amount = parseFloat(amount);
+                calculateExpenses();
+                $scope["changeEntry"+index] = false; 
             };
             
             $scope.deleteEntry = function(recordId){

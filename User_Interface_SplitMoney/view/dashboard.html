@@ -1,5 +1,5 @@
 <div class="container-fluid dashboard">
-    <div class="roboto" style="padding-top:10px">Put the name and contributed amount:</div>
+    <div class="roboto fontweight300" style="padding-top:10px">Put the name and contributed amount:</div>
 
     <div class="row">
         <form name="contrib" class="form-inline text-center" novalidate>
@@ -33,7 +33,7 @@
     <hr>
     <div class="row">
         <div class="text-right col-sm-12">
-            <strong>Total Spent: Rs. {{totalSpent}}</strong>
+            <strong class="fontweight300">Total Spent: Rs. {{totalSpent}}</strong>
             <div>
             <button class="btn btn-success" ng-click="reset()">Reset</button>
             </div>
@@ -41,21 +41,26 @@
     </div>
     <div class="col-sm-12" ng-show="cloneArray.length!=0">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-hover ">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Contribution Amount</th>
-                        <th>Amount Payable</th>
-                        <th>Amount Receivable</th>
+                        <th class="fontweight300">Name</th>
+                        <th class="fontweight300">Contribution Amount</th>
+                        <th class="fontweight300">Amount Payable</th>
+                        <th class="fontweight300">Amount Receivable</th>
                     </tr>
                     <tr ng-repeat="user in cloneArray track by $index">
                         <td>{{$index+1}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.amount}}</td>
-                        <td style="color:red">{{user.pay}}</td>
+                        <td style="font-style: italic;font-weight: 100;">{{user.name}}</td>
+                        <td>
+                            <span ng-hide="changeEntry{{$index}}">{{user.amount}}</span>
+                            <span ng-show="changeEntry{{$index}}"><input type="text" ng-model="user.amount" style="width: 121px;color: #000;"></span>
+                            <spn ng-show="changeEntry{{$index}}"><button class="btn btn-info" ng-click="updateEntry(user.amount,$index)">Update</button></spn>
+                        </td>
+                        <td style="color:#e80e0e">{{user.pay}}</td>
                         <td style="color:green">{{user.receive}}</td>
+                        <td><i class="fa fa-plus-circle" ng-click="changeEntry($index)"></i></td>
                         <td><i class="fa fa-trash-o pointer" ng-click="deleteEntry($index)"></i></td>
                     </tr>
                 </thead>
