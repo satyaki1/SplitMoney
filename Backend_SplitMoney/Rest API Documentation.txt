@@ -1,0 +1,22 @@
+**SmartMoney**
+
+List all groups:[Use Post to create]
+http://10.222.36.128:8080/SplitMoney/groups/
+
+List a particular group
+http://10.222.36.128:8080/SplitMoney/groups/{groupId}
+
+List all Users for a group: [Use Post to create]
+http://10.222.36.128:8080/SplitMoney/groups/{groupId}/users
+
+List a particular user in a group:
+http://10.222.36.128:8080/SplitMoney/groups/{groupId}/users/{userId}
+
+List all expenditures in a group: [Use POST to create]
+http://10.222.36.128:8080/SplitMoney/groups/{groupId}/expenditures
+
+List all expenditures for a user in a group:
+http://10.222.36.128:8080/SplitMoney/groups/{groupId}/expenditures/{userId}
+
+
+
