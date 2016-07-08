@@ -16,9 +16,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.splitmoney.beans.CreatedMessage;
 import com.splitmoney.beans.User;
 import com.splitmoney.service.SplitMoneyService;
 import com.splitmoney.utils.DataNotFoundException;
+import com.splitmoney.utils.ResourceNotCreatedException;
 
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 public class UserResource {
@@ -38,14 +40,17 @@ public class UserResource {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response createUserInGroup(@PathParam("groupId") String groupId, User user, @Context UriInfo uriInfo) throws URISyntaxException{
-		service.createUser(user);
-		String userId = "user-"+user.getfName()+"-"+user.getlName();
-		service.addToGroup(groupId, userId);
+		User createdUser =  service.createUser(user);
 		
-		URI uri= uriInfo.getAbsolutePathBuilder().path(userId).build();
-		System.out.println("Inside this");
-		return Response.created(uri).build();
+		if(createdUser!=null)
+		{
+		service.addToGroup(groupId, createdUser.getUserId());
+		URI uri= uriInfo.getAbsolutePathBuilder().path(createdUser.getUserId()).build();
+		return Response.created(uri).entity(new CreatedMessage("User with ID \'" + createdUser.getUserId() +"\' is created")).build();
 		
+		}
+	
+	throw new ResourceNotCreatedException("User \'"+ user.getfName() + " "+ user.getlName() +"\' could not be created. User with this name already exists.");
 	}
 	
 	

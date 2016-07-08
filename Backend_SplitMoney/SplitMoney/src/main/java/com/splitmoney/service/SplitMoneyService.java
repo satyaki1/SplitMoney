@@ -3,7 +3,6 @@ package com.splitmoney.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +23,7 @@ public class SplitMoneyService {
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	
-	public void createUser(User user){
+	public User createUser(User user){
 		
 	    // create the mysql insert preparedstatement
 	    try {
@@ -39,9 +38,13 @@ public class SplitMoneyService {
 
 		    // execute the preparedstatement
 		    preparedStmt.execute();
+		    
+		    user.setUserId(userId);
+		    return user;
 		} catch( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 	 }
 	
@@ -59,14 +62,15 @@ public class SplitMoneyService {
 		    // execute the preparedstatement
 		    preparedStmt.execute();
 		     connection.close();
-		    return new Group(groupId, group.getGroupName()); //successfully created
+		     group.setGroupId(groupId);
+		    return group; //successfully created
 		} catch( Exception e) {
 			e.printStackTrace();
 			return null; //Not Created 
 		}
 	}
 	
-	public int createExpenditure(Expenditure expenditure){
+	public Expenditure createExpenditure(Expenditure expenditure){
 		// create the mysql insert preparedstatement
 	    try {
 	    	connection = daoImpl.getConnection();
@@ -83,10 +87,13 @@ public class SplitMoneyService {
 		    // execute the preparedstatement
 		    preparedStmt.execute();
 		     connection.close();
-		    return 1; //successfully created
+		     expenditure.setExpenditureId(expId);
+		   
+		     return expenditure; //successfully created
+		     
 		} catch( Exception e) {
 			e.printStackTrace();
-			return 0; //Not Created 
+			return null; //Not Created 
 		}
 	}
 	

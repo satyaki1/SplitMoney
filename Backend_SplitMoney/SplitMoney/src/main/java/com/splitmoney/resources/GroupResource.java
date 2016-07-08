@@ -4,7 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.splitmoney.beans.Expenditure;
+import com.splitmoney.beans.CreatedMessage;
 import com.splitmoney.beans.Group;
-import com.splitmoney.beans.User;
 import com.splitmoney.service.SplitMoneyService;
 import com.splitmoney.utils.DataNotFoundException;
+import com.splitmoney.utils.ResourceNotCreatedException;
 
 @Path("/groups")
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -52,13 +51,13 @@ public class GroupResource {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response createGroup(Group group, @Context UriInfo info) throws URISyntaxException{
 		Group createdGroup = service.createGroup(group);
-		if(!createdGroup.equals(null))
+		if(createdGroup!=null)
 			{
 			URI uri = info.getAbsolutePathBuilder().path(createdGroup.getGroupName()).build();
-			return Response.created(uri).build();
+			return Response.created(uri).entity(new CreatedMessage("Group with ID \'" + createdGroup.getGroupId() +"\' is created")).build();
 			}
 		
-		return Response.notModified().build();
+		throw new ResourceNotCreatedException("Group \'"+ group.getGroupName() +"\' could not be created. Group with this name already exists.");
 	}
 	
 	//Read A Group

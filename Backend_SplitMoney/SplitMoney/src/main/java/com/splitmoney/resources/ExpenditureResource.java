@@ -10,12 +10,16 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
+import com.splitmoney.beans.CreatedMessage;
 import com.splitmoney.beans.Expenditure;
 import com.splitmoney.service.SplitMoneyService;
+import com.splitmoney.utils.ResourceNotCreatedException;
 
 @Path("/")
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -32,11 +36,15 @@ public class ExpenditureResource {
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response createExpenditureInGroup(@PathParam("groupId") String groupId, Expenditure expenditure) throws URISyntaxException{
-		service.createExpenditure(expenditure);
-		System.out.println("Inside this");
-		return Response.created(new URI("")).build();
+	public Response createExpenditureInGroup(@PathParam("groupId") String groupId, Expenditure expenditure, @Context UriInfo uriInfo ) throws URISyntaxException{
+		Expenditure createdExpenditure = service.createExpenditure(expenditure);
 		
+		if(createdExpenditure!=null){
+			URI uri= uriInfo.getAbsolutePathBuilder().path(createdExpenditure.getExpenditureId()).build();
+			return Response.created(uri).entity(new CreatedMessage("Expenditure with ID \'" + expenditure.getExpenditureId() +"\' is created")).build();
+		}
+		
+		throw new ResourceNotCreatedException("Expenditure \'"+ expenditure.getSpendingName() + "\' could not be created. ");
 	}
 	
 	@GET
